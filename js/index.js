@@ -8,6 +8,7 @@ $('form#messagebox').submit(function() {
         text: message,
         nick: nickname
     });
+    $('#messages').append($('<li>').text(nickname + ": " + message));
     $('#m').val('');
     return false;
 });
