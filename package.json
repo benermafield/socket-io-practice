@@ -1,6 +1,6 @@
 {
   "name": "socket-io-practice",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Creating various Socket.IO apps for the purpose of practising live web apps",
   "dependencies": {
     "express": "^4.13.1",
