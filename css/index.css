@@ -64,11 +64,3 @@ form#nicknamebox button {
 	background: #3AE877;
 	!important
 }
-#typing {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-}
-#typing li {
-	padding: 5px;
-}
