@@ -5,6 +5,7 @@
 }
 body {
 	font: 13px Helvetica, Arial;
+	margin-bottom: 90px;
 }
 form#messagebox {
 	display: none;
@@ -62,4 +63,12 @@ form#nicknamebox button {
 #messages li.info {
 	background: #3AE877;
 	!important
+}
+#typing {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+#typing li {
+	padding: 5px;
 }

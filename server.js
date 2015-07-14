@@ -41,6 +41,13 @@ io.on('connection', function(socket) {
 	socket.on('chat message', function(msg) {
 		socket.broadcast.emit('chat message', msg);
 	});
+
+	socket.on('typing', function(typ) {
+		socket.broadcast.emit('typing', {
+			nickname: socket.nickname,
+			typing: typ
+		})
+	});
 });
 
 http.listen(3000, function() {
