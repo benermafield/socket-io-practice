@@ -8,29 +8,18 @@
 
 <body>
     <ul id="messages"></ul>
-    <form action="">
+    <form id="messagebox" action="">
         <input id="m" autocomplete="off" />
         <button>Send</button>
     </form>
+    <form id="nicknamebox" action="">
+    	<input id="nickname" placeholder="Nickname" autocomplete="off" />
+    	<button>Chat!</button>
+    </form>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script>
-    var socket = io();
-    $('form').submit(function() {
-        socket.emit('chat message', $('#m').val());
-        $('#m').val('');
-        return false;
-    });
-    socket.on('chat message', function(msg) {
-    	$('#messages').append($('<li>').text(msg));
-    });
-    socket.on('user connected', function() {
-    	$('#messages').append($('<li>', {class: 'info'}).text('A user has connected!'));
-    });
-    socket.on('user disconnected', function() {
-    	$('#messages').append($('<li>', {class: 'info'}).text('A user has disconnected!'));
-    });
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js">
     </script>
+	<script src="/js/index.js"></script>
 </body>
 
 </html>
