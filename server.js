@@ -18,6 +18,7 @@ app.get('/js/index.js', function(req, res) {
 
 io.on('connection', function(socket) {
 	io.emit('user connected');
+	socket.emit('user list', Object.keys(users))
 	socket.nickname = "";
 
 	socket.on('disconnect', function() {

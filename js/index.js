@@ -11,6 +11,7 @@ $(document).ready(function() {
 
     socket.on('chat message', function(msg) {
         $('#messages').append($('<li>').text(msg.nick + ": " + msg.text));
+        scrollToBottom();
     });
 
     socket.on('user connected', function() {
@@ -23,6 +24,9 @@ $(document).ready(function() {
         $('#messages').append($('<li>', {
             class: 'info'
         }).text(nick + ' has joined the chat!'));
+        $('#users').append($('<li>', {
+            id: nick
+        }).text(nick));
     });
 
     socket.on('user disconnected', function(nick) {
@@ -32,6 +36,7 @@ $(document).ready(function() {
             $('#messages').append($('<li>', {
                 class: 'info'
             }).text(nick + ' has disconnected!'));
+            $('#users li#' + nick).remove();
         } else {
             $('#messages').append($('<li>', {
                 class: 'info'
@@ -58,15 +63,26 @@ $(document).ready(function() {
         updateUsersTyping();
     });
 
+    socket.on('user list', function(users) {
+        for (i = 0; i < users.length; i++) {
+            $('#users').append($('<li>', {
+                id: users[i]
+            }).text(users[i]));
+        }
+    });
+
     // ===== jQuery =====
     $('form#messagebox').submit(function() {
-        message = $('#m').val();
-        socket.emit('chat message', {
-            text: message,
-            nick: nickname
-        });
-        $('#messages').append($('<li>').text(nickname + ": " + message));
-        $('#m').val('');
+        if ($('#m').val().length > 0) {
+            message = $('#m').val();
+            socket.emit('chat message', {
+                text: message,
+                nick: nickname
+            });
+            $('#messages').append($('<li>').text(nickname + ": " + message));
+            $('#m').val('').trigger('input');
+            scrollToBottom();
+        }
         return false;
     });
 
@@ -93,18 +109,26 @@ $(document).ready(function() {
     // ===== Helper =====
     var userNotTyping = function(nick) {
         i = usersTyping.indexOf(nick);
-        usersTyping.splice(i, 1);
+        if (i != -1)
+            usersTyping.splice(i, 1);
     };
 
     var updateUsersTyping = function() {
         if (usersTyping.length == 0)
-            text = "";
+            $('#typing').hide();
         else {
+
             text = "Users currently typing: ";
             for (i = 0; i < usersTyping.length; i++) {
-                text = text + usersTyping[i] + " ";
+                if (i != 0)
+                    text = text + ", ";
+                text = text + usersTyping[i];
             }
+            $('#typing').text(text).show();
         }
-        $('#typing').text(text);
     }
+
+    var scrollToBottom = function() {
+        $('html, body').scrollTop($(document).height() - $(window).height());
+    };
 });
